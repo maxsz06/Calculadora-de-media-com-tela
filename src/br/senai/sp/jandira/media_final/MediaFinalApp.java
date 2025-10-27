@@ -21,33 +21,23 @@ public class MediaFinalApp extends Application {
         launch(args);
     }
 
-
     @Override   //Metodo responsavel por iniciar o "Stage (Palco)"
     public void start(Stage stage) throws Exception {
-
 
         stage.setWidth(600);    // Determinar o tamanho do stage
         stage.setHeight(600);   // Determinar o tamanho do stage
 
-
         stage.setTitle("Média Final");  //Derteminar o título do stage (tela/janela)
-
 
         BorderPane root = new BorderPane();   // Painel Raiz (root)
 
-
-
-
         Label labelTitulo= new Label();       // Painel Titulo (top)
         labelTitulo.setText("Escola \"Prof. Vicente Amato\"");
-
 
         //Formatação do texto da label
 
         labelTitulo.setStyle("-fx-text-fill: #fc1c03; -fx-font-size:32;-fx-font-weight:bold"); // alterando a cor do titulo, Tamanho
         labelTitulo.setPadding(new Insets(10,0,10,10)); //Delimitar o espaçamento
-
-
 
         //Painel formulario
 
@@ -75,9 +65,6 @@ public class MediaFinalApp extends Application {
 
         ); //Adiciona o "Label" e "TextField" ao agrupamento para mandar para o (Root)
 
-
-
-
         // Painel Resultado (Bottom)
 
         VBox painelResultado = new VBox();
@@ -88,8 +75,6 @@ public class MediaFinalApp extends Application {
         Label labelSituacao = new Label("Situação: ");
 
         painelResultado.getChildren().addAll(labelAluno,labelMediaFinal,labelSituacao);//Adiciona o "Label" e "TextField" ao agrupamento para mandar para o (Root)
-
-
 
         //Painel de Botoes
 
@@ -111,9 +96,6 @@ public class MediaFinalApp extends Application {
 
         painelDeBotoes.getChildren().addAll(buttonCalcularMedia,buttonLimpar,buttonSair);//Adiciona o "Label" e "TextField" ao agrupamento para mandar para o (Root)
 
-
-
-
         //Definir onde vai ficar cada caixa
 
         root.setBottom(painelResultado);
@@ -125,15 +107,68 @@ public class MediaFinalApp extends Application {
 
         stage.setScene(scene);
 
-
-
-
-
         stage.show();//Mostrar o Stage (Tela/Janela)
-
 
         //Eventos de clique dos botões
 
-    }
+        buttonCalcularMedia.setOnAction(click -> {
+            System.out.println("Botão clicado!");
+            String nomeDigitado = textFieldNome.getText();
+            labelAluno.setText("Nome do aluno: " + nomeDigitado);
 
+            //Cacular Média
+            //Obter as notas
+
+            //Criar um vetor (array) de notas
+
+            double[] notas = new double[4];
+            String[] notasStr = new String[4];
+
+            notasStr[0] = textFieldNota1.getText();
+            notas[0] = Double.parseDouble(notasStr[0]);
+
+            notasStr[1] = textFieldNota2.getText();
+            notas[1] = Double.parseDouble(notasStr[1]);
+
+            notasStr[2] =  textFieldNota3.getText();
+            notas[2] = Double.parseDouble(notasStr[2]);
+
+            notasStr[3] = textFieldNota4.getText();
+            notas[3]= Double.parseDouble(notasStr[3]);
+
+            //Uso de LOOP while (Enquanto)
+
+
+            double mediaFinal = 0.0;
+            int i =0;
+            while (i<notas.length){
+
+                mediaFinal= mediaFinal + notas[i];
+                i= i + 1;
+            }
+            mediaFinal = mediaFinal/notas.length;
+
+
+
+            String mediaFinalStr = String.format("%.2f",mediaFinal);
+
+            labelMediaFinal.setText("Media final: " + mediaFinalStr);
+
+        // Calcular Aprovado, reprovado ou Em Recuperação
+
+            String situacao;
+
+             if (mediaFinal< 4){
+           situacao = "Reprovado";
+             }else if (mediaFinal>=6){
+           situacao ="Aprovado";
+              }else {
+                 situacao = "Recuperação";
+              }
+
+            labelSituacao.setText("Situação: " + situacao);
+
+        });
+
+    }
 }
