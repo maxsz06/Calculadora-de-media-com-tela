@@ -3,6 +3,7 @@ package br.senai.sp.jandira.media_final;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Optional;
 
 //------------------------------------------------//
 
@@ -167,6 +169,34 @@ public class MediaFinalApp extends Application {
               }
 
             labelSituacao.setText("Situação: " + situacao);
+
+        });
+
+        buttonLimpar.setOnAction(click->{
+
+            textFieldNome.clear();
+            textFieldNota1.clear();
+            textFieldNota2.clear();
+            textFieldNota3.clear();
+            textFieldNota4.clear();
+
+            labelMediaFinal.setText("Media Final: ");
+            labelSituacao.setText("Situação : ");
+            labelAluno.setText("Nome do aluno: ");
+            textFieldNome.requestFocus();
+
+        }); // Função Lambda
+
+        buttonSair.setOnAction(actionEvent -> {
+            Alert alerta = new Alert(Alert.AlertType.CONFIRMATION, "Fechar aplicação", ButtonType.YES,  ButtonType.NO);
+            Optional<ButtonType>botaoPressionado = alerta.showAndWait();
+
+            if (botaoPressionado.get()==ButtonType.YES) {
+                Alert alerta2 = new Alert(Alert.AlertType.INFORMATION, "Até logo!");
+                alerta2.showAndWait();
+              System.exit(0);
+            }
+
 
         });
 
